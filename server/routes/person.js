@@ -35,4 +35,18 @@ module.exports = app => {
       return res.status(500).json({ error: _(error.errors).first().message })
     }
   })
+
+  /**
+   * DELETE:/api/people/:id usada para apagar uma pessoa com o
+   * id informado por parâmetro, em todo cso o json retornado é
+   * {json}, porém no caso de sucesso ele será falso
+   */
+  app.delete('/api/people/:id', async (req, res) => {
+    try {
+      await Person.findOneAndRemove({_id: req.params.id}).exec()
+      return res.status(200).json({ error: false })
+    } catch (error) {
+      return res.status(200).json({ error })
+    }
+  })
 }
