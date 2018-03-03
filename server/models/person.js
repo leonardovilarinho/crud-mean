@@ -7,7 +7,7 @@ module.exports = mongoose.model(
       type: String,
       required: [true, 'O nome não pode conter números.'],
       validate: {
-        validator: value => /\d/.test(value),
+        validator: value => !/\d/.test(value),
         message: 'Por favor, preencha com um número sem números!'
       }
     },
