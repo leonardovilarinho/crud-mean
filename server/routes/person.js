@@ -24,8 +24,7 @@ module.exports = app => {
    */
   app.post('/api/people', async (req, res) => {
     try {
-      const exists = await Person.find({email: req.body.email}).exec()
-      if (_(exists).size() > 0) {
+      if (await Person.existsWithEmail(req.body.email)) {
         return res.status(500).json({ error: 'Essa pessoa já existe no sistema.' })
       }
 
@@ -43,7 +42,29 @@ module.exports = app => {
    */
   app.delete('/api/people/:id', async (req, res) => {
     try {
-      await Person.findOneAndRemove({_id: req.params.id}).exec()
+      await Person.findByIdAndRemove(req.params.id).exec()
+      return res.status(200).json({ error: false })
+    } catch (error) {
+      return res.status(200).json({ error })
+    }
+  })
+
+  /**
+   * PUT:/api/people/:id é responsável por editar uma pessoa com
+   * o id passado por parâmetro, caso o novo email pertença a uma
+   * pessoa já existente é retornado um json {error}, em caso de sucesso
+   * o mesmo json é retornado com o erro falso
+   */
+  app.put('/api/people/:id', async (req, res) => {
+    try {
+      const { email } = req.body
+      const person = await Person.findById(req.params.id).exec()
+
+      if (person.email !== email && await Person.existsWithEmail(email)) {
+        return res.status(500).json({ error: 'Essa pessoa já existe no sistema.' })
+      }
+
+      await Person.findByIdAndUpdate(req.params.id, req.body).exec()
       return res.status(200).json({ error: false })
     } catch (error) {
       return res.status(200).json({ error })
