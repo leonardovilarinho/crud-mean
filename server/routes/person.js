@@ -70,4 +70,19 @@ module.exports = app => {
       return res.status(500).json({ error: _(error.errors).map(i => i.message) })
     }
   })
+
+  /**
+   * GET:/api/people/:id é responsável por recuperar os dados da
+   * pessoa com o id informado pelo parâmetro
+   */
+  app.get('/api/people/:id', async (req, res) => {
+    try {
+      const person = await Person.findOne({ _id: req.params.id }).exec()
+      if (!person) return res.status(500).json({ error: 'Pessoa não encontrada!' })
+
+      return res.status(200).json({ error: false, person })
+    } catch (error) {
+      return res.status(200).json({ error: error })
+    }
+  })
 }
