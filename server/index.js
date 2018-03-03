@@ -1,11 +1,16 @@
 require('dotenv').load()
 const express = require('express')
+const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const routes = require('./routes')
 
-const app = express()
-app.use(bodyParser.json())
+mongoose.connect(process.env.MONGODB_URI, err => {
+  if (err) throw err
 
-routes(app)
+  const app = express()
+  app.use(bodyParser.json())
 
-app.listen(process.env.PORT || 3000, () => console.log('App done!'))
+  routes(app)
+
+  app.listen(process.env.PORT || 3000, () => console.log('App done!'))
+})
