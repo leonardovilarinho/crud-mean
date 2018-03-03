@@ -8,4 +8,4 @@ app.use(bodyParser.json())
 
 routes(app)
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3000, () => console.log('App done!'))

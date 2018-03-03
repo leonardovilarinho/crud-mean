@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "nodemon server/index.js",
+    "server": "nodemon server/index.js --exec 'npm run server-lint && node'",
     "server-lint": "eslint server/*"
   },
   "private": true,
