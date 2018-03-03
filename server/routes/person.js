@@ -31,7 +31,7 @@ module.exports = app => {
       await Person.create(req.body)
       return res.status(200).json({ error: false })
     } catch (error) {
-      return res.status(500).json({ error: _(error.errors).first().message })
+      return res.status(500).json({ error: _(error.errors).map(i => i.message) })
     }
   })
 
@@ -67,7 +67,7 @@ module.exports = app => {
       await Person.findByIdAndUpdate(req.params.id, req.body).exec()
       return res.status(200).json({ error: false })
     } catch (error) {
-      return res.status(200).json({ error })
+      return res.status(500).json({ error: _(error.errors).map(i => i.message) })
     }
   })
 }

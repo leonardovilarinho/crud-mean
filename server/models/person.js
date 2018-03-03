@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema({
+  /* Campo de nome, é obrigatório e não permitido números */
   name: {
     type: String,
     required: [true, 'O nome não pode conter números.'],
@@ -10,6 +11,7 @@ const schema = new mongoose.Schema({
     }
   },
 
+  /* Campo de email, é obrigatório e permitido apenas emails válidos */
   email: {
     type: String,
     required: [true, 'O email deve ser um email válido.'],
@@ -23,6 +25,7 @@ const schema = new mongoose.Schema({
     }
   },
 
+  /* Campo de data de nascimento, é obrigatório e permite apenas datas passadas */
   birth: {
     type: Date,
     required: [true, 'A data de nascimento deve ser anterior a hoje.'],
@@ -32,6 +35,7 @@ const schema = new mongoose.Schema({
     }
   },
 
+  /* Campo de telefone, é obrigatório e permite apenas a mascara 00 00000-0000 */
   phone: {
     type: String,
     required: [true, 'O número do telefone deve ser um número com 11 dígitos.'],
@@ -43,6 +47,9 @@ const schema = new mongoose.Schema({
   }
 })
 
+/**
+ * Verifica se já existe uma pessoa com o mesmo email enviado por parâmetro
+ */
 schema.statics.existsWithEmail = async function (email) {
   const exists = await this.find({ email }).exec()
   return exists.length > 0
