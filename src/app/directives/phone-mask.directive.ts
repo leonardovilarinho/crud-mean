@@ -15,6 +15,6 @@ export class PhoneMaskDirective {
   constructor(public element: ElementRef, public render: Renderer) {
     this.el = this.element.nativeElement;
 
-    this.render.listen(this.el, 'keyup', () => VMasker(this.el).maskPattern('99 99999-9999'));
+    this.render.listen(this.el, 'keyup', () => VMasker(this.el).maskPattern('99 9999-99999'));
   }
 }

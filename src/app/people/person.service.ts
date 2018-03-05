@@ -3,16 +3,22 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Person } from './person';
 import _ from 'lodash';
+import { environment } from '../../environments/environment';
+
+const url = environment.server || '';
 
 @Injectable()
 export class PersonService {
-  private route = '/api/people';
+  private route: string;
 
   onCreate = new EventEmitter<Person>();
   onToEdit = new EventEmitter<Person>();
   onEdited = new EventEmitter<Person>();
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+    const server = environment.server || '';
+    this.route = `${server}/api/people`;
+  }
 
   /**
    * Pega a lista de pessooas, retornando uma promise que pega

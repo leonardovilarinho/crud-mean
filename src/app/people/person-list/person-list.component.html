@@ -1,9 +1,9 @@
 <section style="padding: 0% 3% 0% 5%" *ngIf="people.length > 0">
   <br>
   <section class="row">
-    <button [disabled]="!selected" (click)="clear()" class="btn btn-sm btn-primary">Limpar</button>
-    <button [disabled]="!selected" (click)="edit()" class="btn btn-sm btn-warning">Editar</button>
-    <button [disabled]="!selected" (click)="delt()" class="btn btn-sm btn-danger">Apagar</button>
+    <button [disabled]="!selected || loading" (click)="clear()" class="btn btn-sm btn-primary">Limpar</button>
+    <button [disabled]="!selected || loading" (click)="edit()" class="btn btn-sm btn-warning">Editar</button>
+    <button [disabled]="!selected || loading" (click)="delt()" class="btn btn-sm btn-danger">Apagar</button>
   </section>
 
   <table class="table row">

@@ -11,7 +11,8 @@ export class PersonFormComponent implements OnInit {
 
   person: Person;
   message: string;
-  toEdit = false;
+  toEdit: Boolean = false;
+  loading: Boolean = false;
 
   constructor(private service: PersonService) { }
 
@@ -32,6 +33,7 @@ export class PersonFormComponent implements OnInit {
    * Chama a edição de uma pessoa do serviço
    */
   edit() {
+    this.loading = true;
     this.service.update(this.person)
       .then(result => this.handlerResult(result, 'Pessoa editada!'));
   }
@@ -40,6 +42,7 @@ export class PersonFormComponent implements OnInit {
    * Chama a criação de uma pessoa do serviço
    */
   create() {
+    this.loading = true;
     this.service.create(this.person)
       .then(result => this.handlerResult(result, 'Pessoa criada!'));
   }
@@ -72,6 +75,7 @@ export class PersonFormComponent implements OnInit {
    * @param msg
    */
   private showMessage(msg: string) {
+    this.loading = false;
     this.message = msg;
     setTimeout(() => (this.message = ''), 4000);
   }

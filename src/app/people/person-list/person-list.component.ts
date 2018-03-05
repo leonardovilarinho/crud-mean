@@ -12,6 +12,7 @@ export class PersonListComponent implements OnInit {
 
   people: Person[] = [];
   selected: Person;
+  loading: Boolean = false;
 
   constructor(private service: PersonService) { }
 
@@ -44,7 +45,9 @@ export class PersonListComponent implements OnInit {
    * @param person
    */
   select(person: Person) {
-    this.selected = person;
+    if (!this.loading) {
+      this.selected = person;
+    }
   }
 
   /**
@@ -66,6 +69,7 @@ export class PersonListComponent implements OnInit {
    * Chama o serviço para apagar uma pessoa, exibindo o retorno do mesmo
    */
   delt() {
+    this.loading = true;
     this.service.remove(this.selected)
       .then(response => {
         if (!response) {
@@ -73,6 +77,7 @@ export class PersonListComponent implements OnInit {
           this.people.splice(index, 1);
           this.clear();
         }
+        this.loading = false;
       });
   }
 }

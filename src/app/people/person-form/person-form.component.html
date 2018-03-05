@@ -2,33 +2,33 @@
   <section class="row">
     <div class="form-group input-group-sm col-md-12">
       <label class="control-label" for="name">Nome Completo</label>
-      <input [(ngModel)]="person.name" name="name" type="text" class="form-control" id="name">
+      <input [disabled]="loading" [(ngModel)]="person.name" name="name" type="text" class="form-control" id="name">
     </div>
   </section>
 
   <section class="row">
     <div class="form-group input-group-sm col-md-6">
       <label class="control-label" for="email">Email</label>
-      <input [(ngModel)]="person.email" name="email" type="mail" class="form-control" id="email">
+      <input [disabled]="loading" [(ngModel)]="person.email" name="email" type="mail" class="form-control" id="email">
     </div>
 
     <div class="form-group input-group-sm col-md-3">
       <label class="control-label" for="birth">Nascimento</label>
-      <input [(ngModel)]="person.birth" name="birth" type="date" class="form-control" id="birth">
+      <input [disabled]="loading" [(ngModel)]="person.birth" name="birth" type="date" class="form-control" id="birth">
     </div>
 
     <div class="form-group input-group-sm col-md-3">
       <label class="control-label" for="phone">Telefone</label>
-      <input appPhoneMask [(ngModel)]="person.phone" name="phone" type="text" class="form-control" id="phone">
+      <input [disabled]="loading" appPhoneMask [(ngModel)]="person.phone" name="phone" type="text" class="form-control" id="phone">
     </div>
   </section>
 
   <section class="text-right">
     <small style="margin-right: 10px">{{message}}</small>
-    <button *ngIf="!toEdit"  (click)="create()" class="btn btn-sm btn-primary">
+    <button *ngIf="!toEdit" [disabled]="loading" (click)="create()" class="btn btn-sm btn-primary">
       Criar essa pessoa
     </button>
-    <button *ngIf="toEdit" (click)="edit()" class="btn btn-sm btn-primary">
+    <button *ngIf="toEdit" [disabled]="loading" (click)="edit()" class="btn btn-sm btn-primary">
       Editar essa pessoa
     </button>
   </section>
