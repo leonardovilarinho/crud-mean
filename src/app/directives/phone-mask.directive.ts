@@ -7,6 +7,11 @@ import VMasker from 'vanilla-masker';
 export class PhoneMaskDirective {
   public el: HTMLInputElement;
 
+  /**
+   * Captura o elemento e usa o masker do vanilla para definir uma máscara
+   * @param element
+   * @param render
+   */
   constructor(public element: ElementRef, public render: Renderer) {
     this.el = this.element.nativeElement;
 

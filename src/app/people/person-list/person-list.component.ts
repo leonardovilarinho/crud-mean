@@ -15,6 +15,11 @@ export class PersonListComponent implements OnInit {
 
   constructor(private service: PersonService) { }
 
+  /**
+   * Pega a lista de pessoas do serviço, assina a criação e edição
+   * para etualizar a lista de acordo com o novo elemento enviado ao
+   * servidor
+   */
   ngOnInit() {
     this.service.list().then((people: Person[]) => (this.people = people));
 
@@ -29,22 +34,37 @@ export class PersonListComponent implements OnInit {
           this.people[i] = person;
         }
       });
+
       this.clear();
     });
   }
 
+  /**
+   * Seleciona uma pessoa da tabela, para ter as ações sobre ela
+   * @param person
+   */
   select(person: Person) {
     this.selected = person;
   }
 
+  /**
+   * Limpa a pessoa selecionada atualmente, desfazendo a seleção da tabela
+   */
   clear() {
     this.selected = null;
   }
 
+  /**
+   * Envia um sinal com uma cópia da pessoa seleciona para que o formulário
+   * reveba a pessoa e tarte de edita-la
+   */
   edit() {
     this.service.onToEdit.emit(Object.assign({}, this.selected));
   }
 
+  /**
+   * Chama o serviço para apagar uma pessoa, exibindo o retorno do mesmo
+   */
   delt() {
     this.service.remove(this.selected)
       .then(response => {

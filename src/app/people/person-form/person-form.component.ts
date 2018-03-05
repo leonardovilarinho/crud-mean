@@ -15,6 +15,11 @@ export class PersonFormComponent implements OnInit {
 
   constructor(private service: PersonService) { }
 
+  /**
+   * Inicia uma pessoa em branco e assina o evento de ir
+   * para edição, assim quando solicitar uma edição a pessoa do
+   * formulário é alterada assim como o botão e método de submissão
+   */
   ngOnInit() {
     this.resetPerson();
     this.service.onToEdit.subscribe(person => {
@@ -23,38 +28,52 @@ export class PersonFormComponent implements OnInit {
     });
   }
 
+  /**
+   * Chama a edição de uma pessoa do serviço
+   */
   edit() {
     this.service.update(this.person)
-      .then(result => {
-        if (typeof result === 'string') {
-          return this.showMessage(String(result));
-        }
-
-        this.showMessage('Pessoa editada!');
-        this.resetPerson();
-      });
+      .then(result => this.handlerResult(result, 'Pessoa editada!'));
   }
 
+  /**
+   * Chama a criação de uma pessoa do serviço
+   */
   create() {
     this.service.create(this.person)
-      .then(result => {
-        if (typeof result === 'string') {
-          return this.showMessage(String(result));
-        }
-
-        this.showMessage('Pessoa cadastrada!');
-        this.resetPerson();
-      });
+      .then(result => this.handlerResult(result, 'Pessoa criada!'));
   }
 
+  /**
+   * Manipula o resultado da criação ou edição, verificando se houve erro
+   * retornado, se não exibindo a mensagem do segundo parâmetro
+   * @param result
+   * @param message
+   */
+  private handlerResult(result: String | Person, message: string) {
+    if (typeof result === 'string') {
+      return this.showMessage(String(result));
+    }
+
+    this.showMessage(message);
+    this.resetPerson();
+  }
+
+  /**
+   * Inicia uma nossa pessoa e desabilita a edição
+   */
   private resetPerson() {
     this.person = { name: '', email: '', birth: '', phone: '' };
     this.toEdit = false;
   }
 
+  /**
+   * Mostra uma mensagem e remove-a da tela após um tempo
+   * @param msg
+   */
   private showMessage(msg: string) {
     this.message = msg;
-    setTimeout(() => (this.message = ''), 3000);
+    setTimeout(() => (this.message = ''), 4000);
   }
 
 }

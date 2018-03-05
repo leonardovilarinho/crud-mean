@@ -24,7 +24,7 @@ export class PersonService {
       .toPromise()
       .then(response => {
         const people = _.map(response.json().people, p => {
-          p.birth = p.birth.split('T')[0];
+          p.birth = this.cropBirth(p);
           return p;
         });
         return people || [] as Person[];
@@ -41,40 +41,27 @@ export class PersonService {
     return this.http
       .post(this.route, person)
       .toPromise()
-      .then(response => {
-        const data = response.json();
-        if (data.error) {
-          return this.error(data.error);
-        }
-
-        data.person = this.getPerson(data.person);
-        data.person.birth = data.person.birth.split('T')[0];
-        this.onCreate.emit(data.person);
-
-        return data.person;
-      })
+      .then(response => this.receiveAndEmit(response.json(), this.onCreate))
       .catch(this.error);
   }
 
+  /**
+   * Envia o id da pessoa e os dados da esma para ser editada no banco,
+   * em caso de falha o erro é retornado
+   * @param person
+   */
   update(person: Person): Promise<String | Person> {
     return this.http
       .put(`${this.route}/${person._id}`, person)
       .toPromise()
-      .then(response => {
-        const data = response.json();
-        if (data.error) {
-          return this.error(data.error);
-        }
-
-        data.person = this.getPerson(data.person);
-        data.person.birth = data.person.birth.split('T')[0];
-        this.onEdited.emit(data.person);
-
-        return data.person;
-      })
+      .then(response => this.receiveAndEmit(response.json(), this.onEdited))
       .catch(this.error);
   }
 
+  /**
+   * Apaga a pessoa do bando de dados, a partir do seu id
+   * @param person
+   */
   remove(person: Person): Promise<String | Person> {
     return this.http
       .delete(`${this.route}/${person._id}`)
@@ -83,6 +70,38 @@ export class PersonService {
       .catch(this.error);
   }
 
+  /**
+   * Corta a data de nascimento, retirando o horário que o servidor
+   * entrega
+   * @param person
+   */
+  private cropBirth(person: Person) {
+    return person.birth.split('T')[0];
+  }
+
+  /**
+   * Verifica e existencia de erro, pega a pessoa retornada do servidor
+   * e a envia via evento
+   * @param data
+   * @param event
+   */
+  private receiveAndEmit(data: any, event: EventEmitter<Person>) {
+    if (data.error) {
+      return this.error(data.error);
+    }
+
+    data.person = this.getPerson(data.person);
+    data.person.birth = this.cropBirth(data.person);
+    event.emit(data.person);
+
+    return data.person;
+  }
+
+  /**
+   * Verifica se uma pessoa foi retornada do servidor, no caso
+   * se não retorna nulo
+   * @param person
+   */
   private getPerson(person: any) {
     return person ? (person as Person) : null;
   }
