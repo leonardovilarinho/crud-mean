@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 @Injectable()
 export class PersonService {
-  private route = 'http://localhost:3000/api/people';
+  private route = '/api/people';
 
   onCreate = new EventEmitter<Person>();
   onToEdit = new EventEmitter<Person>();
