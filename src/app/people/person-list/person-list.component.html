@@ -1,19 +1,31 @@
-<br>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>Nascimento</th>
-      <th>Telefone</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let person of people" (click)="select(person)" [class.active]="person == selected">
-      <td>{{ person.name }}</td>
-      <td>{{ person.email }}</td>
-      <td>{{ person.birth }}</td>
-      <td>{{ person.phone }}</td>
-    </tr>
-  </tbody>
-</table>
+<section style="padding: 0% 3% 0% 5%" *ngIf="people.length > 0">
+  <br>
+  <section class="row">
+    <button [disabled]="!selected" (click)="clear()" class="btn btn-sm btn-primary">Limpar</button>
+    <button [disabled]="!selected" (click)="edit()" class="btn btn-sm btn-warning">Editar</button>
+    <button [disabled]="!selected" (click)="delt()" class="btn btn-sm btn-danger">Apagar</button>
+  </section>
+
+  <table class="table row">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Nascimento</th>
+        <th>Telefone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let person of people" (click)="select(person)" [class.active]="person == selected">
+        <td>{{ person.name }}</td>
+        <td>{{ person.email }}</td>
+        <td>{{ person.birth | date:'d/M/y' }}</td>
+        <td>{{ person.phone }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section *ngIf="people.length <= 0" class="text-center">
+  <h2>Sem pessoas aqui!</h2>
+</section>

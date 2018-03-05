@@ -30,6 +30,7 @@
     "lodash": "^4.17.5",
     "mongoose": "^5.0.8",
     "rxjs": "^5.4.2",
+    "vanilla-masker": "^1.2.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

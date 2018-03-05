@@ -12,7 +12,7 @@ module.exports = app => {
       const people = await Person.find({}).select('name email phone birth').exec()
       return res.status(200).json({ error: false, people })
     } catch (error) {
-      return res.status(500).json({ error })
+      return res.status(201).json({ error })
     }
   })
 
@@ -25,13 +25,13 @@ module.exports = app => {
   app.post('/api/people', async (req, res) => {
     try {
       if (await Person.existsWithEmail(req.body.email)) {
-        return res.status(500).json({ error: 'Essa pessoa já existe no sistema.' })
+        return res.status(201).json({ error: 'Essa pessoa já existe no sistema.' })
       }
 
-      await Person.create(req.body)
-      return res.status(200).json({ error: false })
+      const person = await Person.create(req.body)
+      return res.status(200).json({ error: false, person })
     } catch (error) {
-      return res.status(500).json({ error: _(error.errors).map(i => i.message) })
+      return res.status(201).json({ error: _(error.errors).map(i => i.message) })
     }
   })
 
@@ -61,13 +61,13 @@ module.exports = app => {
       const person = await Person.findById(req.params.id).exec()
 
       if (person.email !== email && await Person.existsWithEmail(email)) {
-        return res.status(500).json({ error: 'Essa pessoa já existe no sistema.' })
+        return res.status(201).json({ error: 'Essa pessoa já existe no sistema.' })
       }
 
       await Person.findByIdAndUpdate(req.params.id, req.body).exec()
-      return res.status(200).json({ error: false })
+      return res.status(200).json({ error: false, person: req.body })
     } catch (error) {
-      return res.status(500).json({ error: _(error.errors).map(i => i.message) })
+      return res.status(201).json({ error: _(error.errors).map(i => i.message) })
     }
   })
 
@@ -78,7 +78,7 @@ module.exports = app => {
   app.get('/api/people/:id', async (req, res) => {
     try {
       const person = await Person.findOne({ _id: req.params.id }).exec()
-      if (!person) return res.status(500).json({ error: 'Pessoa não encontrada!' })
+      if (!person) return res.status(201).json({ error: 'Pessoa não encontrada!' })
 
       return res.status(200).json({ error: false, person })
     } catch (error) {
