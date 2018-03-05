@@ -6,24 +6,26 @@
     <button [disabled]="!selected || loading" (click)="delt()" class="btn btn-sm btn-danger">Apagar</button>
   </section>
 
-  <table class="table row">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Nascimento</th>
-        <th>Telefone</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let person of people" (click)="select(person)" [class.active]="person == selected">
-        <td>{{ person.name }}</td>
-        <td>{{ person.email }}</td>
-        <td>{{ person.birth | date:'d/M/y' }}</td>
-        <td>{{ person.phone }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <section class="table-responsive">
+    <table class="table row">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Nascimento</th>
+          <th>Telefone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of people" (click)="select(person)" [class.active]="person == selected">
+          <td>{{ person.name }}</td>
+          <td>{{ person.email }}</td>
+          <td>{{ person.birth | date:'d/M/y' }}</td>
+          <td>{{ person.phone }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 </section>
 
 <section *ngIf="people.length <= 0" class="text-center">
