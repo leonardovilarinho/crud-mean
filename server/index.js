@@ -10,7 +10,7 @@ mongoose.connect(process.env.MONGODB_URI, err => {
 
   const app = express()
   app.use(bodyParser.json())
-  const distDir = __dirname + "/dist/"
+  const distDir = __dirname + '../dist/'
   app.use(express.static(distDir))
 
   app.use((req, res, next) => {
