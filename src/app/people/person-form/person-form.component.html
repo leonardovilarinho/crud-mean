@@ -25,10 +25,10 @@
 
   <section class="text-right">
     <small id="message" style="margin-right: 10px">{{message}}</small>
-    <button *ngIf="!toEdit" [disabled]="loading" (click)="create()" id="create-btn" class="btn btn-sm btn-primary">
+    <button *ngIf="!toEdit" [disabled]="loading" (click)="create()" id="create-btn" class="btn btn-sm btn-success">
       Criar essa pessoa
     </button>
-    <button *ngIf="toEdit" [disabled]="loading" (click)="edit()"  id="edit-btn" class="btn btn-sm btn-primary">
+    <button *ngIf="toEdit" [disabled]="loading" (click)="edit()"  id="edit-btn" class="btn btn-sm btn-success">
       Editar essa pessoa
     </button>
   </section>

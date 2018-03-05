@@ -16,7 +16,7 @@ export class PersonService {
   onEdited = new EventEmitter<Person>();
 
   constructor(private http: Http) {
-    const server = environment.server || '';
+    const server = environment.production ? '' : environment.server || '';
     this.route = `${server}/api/people`;
   }
 
