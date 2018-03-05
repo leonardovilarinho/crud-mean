@@ -7,8 +7,17 @@ describe('crud-mean App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('create new people without name', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    console.log('entrou')
+    const message = page.createPeople({
+      name: '',
+      email: 'test@email.com',
+      birth: '1999-11-11',
+      phone: '34 1121-1212'
+    })
+
+    expect(message).toContain('nome')
+    expect(message).toContain('obrigatório')
   });
 });

@@ -24,11 +24,11 @@
   </section>
 
   <section class="text-right">
-    <small style="margin-right: 10px">{{message}}</small>
-    <button *ngIf="!toEdit" [disabled]="loading" (click)="create()" class="btn btn-sm btn-primary">
+    <small id="message" style="margin-right: 10px">{{message}}</small>
+    <button *ngIf="!toEdit" [disabled]="loading" (click)="create()" id="create-btn" class="btn btn-sm btn-primary">
       Criar essa pessoa
     </button>
-    <button *ngIf="toEdit" [disabled]="loading" (click)="edit()" class="btn btn-sm btn-primary">
+    <button *ngIf="toEdit" [disabled]="loading" (click)="edit()"  id="edit-btn" class="btn btn-sm btn-primary">
       Editar essa pessoa
     </button>
   </section>
