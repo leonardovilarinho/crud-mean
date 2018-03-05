@@ -5,13 +5,13 @@
   "scripts": {
     "ng": "ng",
     "start": "node server/index.js",
-    "build": "ng build",
+    "build": "ng build --prod --env=prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "server": "nodemon server/index.js --exec 'npm run server-lint && node'",
     "server-lint": "eslint server/*",
-    "postinstall": "ng build"
+    "postinstall": "ng build --prod --env=prod"
   },
   "private": true,
   "dependencies": {
